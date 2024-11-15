@@ -29,6 +29,7 @@ jobs:
             repoName: box
             branchName: main
             diy: mlabalabalaDC.sh
+            java_ver: 11
     
 
     steps:
