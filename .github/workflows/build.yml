@@ -28,29 +28,21 @@ jobs:
           - userName: q215613905
             repoName: TVBoxOS
             branchName: main
+            diy: q215613905.sh
           - userName: takagen99
             repoName: Box
             branchName: main
             java_ver: 17
+            diy: takagen99.sh
           - userName: mlabalabala
             repoName: box
             branchName: main
+            diy: mlabalabalaDC.sh
           #- userName: XiaoRanLiu3119
             #repoName: TVBoxOS-Mobile
             #branchName: main
             
-    env:
-      # 登录蓝奏云后在控制台运行document.cookie
-      # cookie的ylogin
-      ylogin: ${{ secrets.YLOGIN }}
-      # cookie的phpdisk_info
-      phpdisk_info: ${{ secrets.PHPDISK_INFO }}
-      # 蓝奏云里的文件夹ID，cookie的folder_id_c
-      lanzou_folder_id: ${{ secrets.FOLDER_ID }}
-      
-      # Telegram
-      TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-      TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+    
 
     steps:
       - name: Checkout
@@ -103,6 +95,13 @@ jobs:
         working-directory: TVBoxOSC
         run: |
           tar -cJf source-${{ env.commitS }}.tar.xz --exclude=.git --exclude=.github *
+          
+      - name: DIY 
+        if: ${{ env.commit }}
+        working-directory: TVBoxOSC
+        run: |
+          chmod +x ${{ github.workspace }}/DIY/${{ matrix.diy }}
+          bash ${{ github.workspace }}/DIY/${{ matrix.diy }}
 
       - name: Option For Test
         if: ${{ inputs.testOption }}
@@ -193,7 +192,7 @@ jobs:
         run: |
           echo "commit=" >> $GITHUB_ENV
 
-      - name: Release and Upload Assets
+      - name: Release 和 Upload Assets
         uses: ncipollo/release-action@main
         if: ${{ env.commit }}
         continue-on-error: true
@@ -207,53 +206,5 @@ jobs:
             TVBoxOSC/apk/*.apk
             TVBoxOSC/source-${{ env.commitS }}.*
 
-      - name: Post To Telegram
-        if: ${{ env.commit && env.TELEGRAM_CHAT_ID && env.TELEGRAM_BOT_TOKEN }}
-        continue-on-error: true
-        working-directory: TVBoxOSC
-        run: |
-          if [ -n "${{ secrets.TELEGRAM_CHAT_ID }}" ] && [ -n "${{ secrets.TELEGRAM_BOT_TOKEN }}" ]; then
-            OUTPUT="${{ github.workspace }}/TVBoxOSC"
-            export appRelease=$(find $OUTPUT/apk/ -name "*${{ matrix.userName }}*.apk")
-            export sourceCode=$(find $OUTPUT -name "source-${{ env.commitS }}.*")
-            ESCAPED="$(sed -e '1s/\[\(.*\)\].*/#\1/' -e 's#\([&"\/]\)#\\\1#g' apk/${{ matrix.userName }}-Release.log)"
-            count=$(echo "$ESCAPED" |wc -m |cut -d ' ' -f1)
-            if [ ${count} -eq 1 ] || [ ${count} -gt 1024 ]; then
-              ESCAPED="$(echo -e "Credit: #${{ matrix.userName }}\nCommit: ${{ env.commit }}\nChangelog:\n${{ env.upStream }}/commits/${{ matrix.branchName }}")"
-            fi
-            ESCAPED=`python3 -c "import urllib.parse, sys; print(urllib.parse.quote(sys.argv[1]))" "$ESCAPED"`
-            #检查源码尺寸，太大则不上传
-            file_size=$(du -s ${sourceCode} | awk '{print $1}')
-            #文件最大值，1024代表1M
-            file_limit_size=20480
-            if [[ ${file_size} -lt ${file_limit_size} ]];then
-              curl -v "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMediaGroup?chat_id=${{ secrets.TELEGRAM_CHAT_ID }}&media=%5B%7B%22type%22%3A%22document%22%2C%20%22media%22%3A%22attach%3A%2F%2FappRelease%22%7D%2C%7B%22type%22%3A%22document%22%2C%20%22media%22%3A%22attach%3A%2F%2FsourceCode%22%2C%20%22caption%22%3A%22${ESCAPED}%22%7D%5D" -F appRelease="@$appRelease" -F sourceCode="@$sourceCode"
-            else
-              curl -v "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMediaGroup?chat_id=${{ secrets.TELEGRAM_CHAT_ID }}&media=%5B%7B%22type%22%3A%22document%22%2C%20%22media%22%3A%22attach%3A%2F%2FappRelease%22%2C%20%22caption%22%3A%22${ESCAPED}%22%7D%5D" -F appRelease="@$appRelease"
-            fi
-          fi
-
-      - name: Upload App To Lanzou
-        if: ${{ env.commit && env.ylogin && env.phpdisk_info && env.lanzou_folder_id }}
-        continue-on-error: true
-        run: |
-          rm -rf ${{ github.workspace }}/TVBoxOSC/apk/*.log
-          python3 ${{ github.workspace }}/.github/scripts/lzy.py "${{ github.workspace }}/TVBoxOSC/apk/" "$lanzou_folder_id"
-          
-      - name: Push to master
-        if: ${{ env.commit }}
-        continue-on-error: true
-        run: |
-          rm -rf TVBoxOSC
-          sed -i '/url =/d' ./.git/config
-          git config --local user.name "github-actions[bot]"
-          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git remote set-url --add origin "https://${{ github.actor }}:${{ secrets.REPO_TOKEN }}@github.com/${{ github.repository }}"
-          git pull --rebase
-          sed -i "/${{ matrix.userName }}\/${{ matrix.repoName }}/s#Updated: [a-zA-Z0-9]*#Updated: ${{ env.commit }}#" README.md
-          git add --all
-          if [[ -n $(git status -s) ]]; then
-            git commit -m "${{ env.commit }}"
-            git push -u -f origin master
-          fi
+      
 
