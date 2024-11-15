@@ -32,7 +32,7 @@ jobs:
           - userName: takagen99
             repoName: Box
             branchName: main
-            java_ver: 17
+            java_ver: 1.8
             diy: takagen99.sh
           - userName: mlabalabala
             repoName: box
