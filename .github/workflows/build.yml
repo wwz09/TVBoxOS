@@ -96,12 +96,12 @@ jobs:
         run: |
           tar -cJf source-${{ env.commitS }}.tar.xz --exclude=.git --exclude=.github *
           
-      - name: DIY 
-        if: ${{ env.commit }}
-        working-directory: TVBoxOSC
-        run: |
-          chmod +x ${{ github.workspace }}/DIY/${{ matrix.diy }}
-          bash ${{ github.workspace }}/DIY/${{ matrix.diy }}
+      #- name: DIY 
+        #if: ${{ env.commit }}
+       # working-directory: TVBoxOSC
+        #run: |
+          #chmod +x ${{ github.workspace }}/DIY/${{ matrix.diy }}
+          #bash ${{ github.workspace }}/DIY/${{ matrix.diy }}
 
       - name: Option For Test
         if: ${{ inputs.testOption }}
