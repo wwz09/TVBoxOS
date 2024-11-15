@@ -30,18 +30,6 @@ jobs:
             branchName: main
             diy: q215613905.sh
             java_ver: 11
-          - userName: takagen99
-            repoName: Box
-            branchName: main
-            java_ver: 17
-            diy: takagen99.sh
-          - userName: mlabalabala
-            repoName: box
-            branchName: main
-            diy: mlabalabalaDC.sh
-          #- userName: XiaoRanLiu3119
-            #repoName: TVBoxOS-Mobile
-            #branchName: main
             
     
 
