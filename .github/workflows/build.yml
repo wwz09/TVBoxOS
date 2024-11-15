@@ -29,10 +29,11 @@ jobs:
             repoName: TVBoxOS
             branchName: main
             diy: q215613905.sh
+            java_ver: 11
           - userName: takagen99
             repoName: Box
             branchName: main
-            java_ver: 1.8
+            java_ver: 17
             diy: takagen99.sh
           - userName: mlabalabala
             repoName: box
