@@ -1,8 +1,8 @@
-name: Auto Build
+name: q215613905 Build
 
 on:
   schedule:
-    - cron: 40 */6 * * *
+    - cron: 36 */6 * * *
   workflow_dispatch:
     inputs:
       rebuild:
@@ -26,13 +26,7 @@ jobs:
             branchName: main
             diy: q215613905.sh
             java_ver: 17
-          - userName: takagen99
-            repoName: Box
-            branchName: main
-            diy: takagen99.sh
-            java_ver: 17
-           
-          
+               
     steps:
       - name: Checkout
         uses: actions/checkout@main
