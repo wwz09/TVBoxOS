@@ -2,7 +2,7 @@
 # Description: Delete older releases and artifacts
 #=======================================================================================================================
 
-name: Delete releases and workflows
+name: Delete releases 和 workflows
 
 on:
   workflow_dispatch:
@@ -64,11 +64,11 @@ jobs:
         echo "DELETE_RELEASE=$DELETE_RELEASE" >> $GITHUB_ENV
         echo "KEEP_MININUM_RELEASE=$KEEP_MININUM_RELEASE" >> $GITHUB_ENV
         
-    - name: Delete older workflow runs and artifacts
+    - name: Delete older workflow runs 和 artifacts
       uses: Mattraks/delete-workflow-runs@main
       if: env.DELETE_ARTIFACTS == 'true'
       with:
-        token: ${{ secrets.REPO_TOKEN }}
+        token: ${{ secrets.GITHUB_TOKEN }}
         repository: ${{ github.repository }}
         retain_days: ${{ env.KEEP_DAY }}
         keep_minimum_runs: ${{ env.KEEP_MININUM_RUNS }}
@@ -80,5 +80,5 @@ jobs:
         keep_latest: ${{ env.KEEP_MININUM_RELEASE }}
         delete_tags: true
       env:
-        GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         
