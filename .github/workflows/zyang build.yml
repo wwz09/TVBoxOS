@@ -102,16 +102,12 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
         if: ${{ env.commit }}
 
-      - name: Install Dependencies
-        run: |
-          ./gradlew build --refresh-dependencies
- 
       - name: 进行构建
         if: ${{ env.commit }}
         working-directory: TVBoxOSC
         run: |
           chmod +x gradlew
-          ./gradlew assemblerelease --build-cache --parallel --daemon --warning-mode all
+          ./gradlew assemblerelease --refresh-dependencies --build-cache --parallel --daemon --warning-mode all
 
       - name: 准备应用程序
         if: ${{ env.commit }}
