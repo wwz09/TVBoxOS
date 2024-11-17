@@ -98,6 +98,10 @@ jobs:
         with:
           distribution: temurin
           java-version: ${{ matrix.java_ver }}
+
+      - name: Install Dependencies
+        run: |
+          ./gradlew build --refresh-dependencies
           
       - uses: gradle/actions/setup-gradle@v4
         if: ${{ env.commit }}
