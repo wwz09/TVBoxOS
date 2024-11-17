@@ -107,7 +107,6 @@ jobs:
         working-directory: TVBoxOSC
         run: |
           chmod +x gradlew
-           ./gradlew build --refresh-dependencies
           ./gradlew assemblerelease --build-cache --parallel --daemon --warning-mode all
 
       - name: 准备应用程序
