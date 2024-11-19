@@ -1,6 +1,6 @@
 # TVBoxOSC
 
-[![Build TVBox](https://github.com/wwz09/TVBoxOS/actions/workflows/build.yml/badge.svg)](https://github.com/wwz09/TVBoxOS/actions/workflows/build.yml)
+[![Build TVBox](https://github.com/wwz09/TVBoxOS/actions/workflows/Auto DC Build/badge.svg)](https://github.com/wwz09/TVBoxOS/actions/workflows/Auto DC Build.yml)
 [![Channel](https://img.shields.io/badge/Follow-Telegram-blue.svg?logo=telegram)](https://t.me/TVBoxOSC)
 [![Download](https://img.shields.io/github/v/release/wwz09/TVBoxOS?color=orange&logoColor=orange&label=Download&logo=DocuSign)](https://github.com/wwz09/TVBoxOS/releases/latest) 
 
