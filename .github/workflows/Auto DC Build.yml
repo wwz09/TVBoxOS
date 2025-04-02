@@ -27,13 +27,13 @@ jobs:
             diy: wwz09DC.sh
             dcdiy: DCDIY.sh
             java_ver: 11
-          - userName: zyang0422
-            repoName: mbox
+          - userName: mlabalabala
+            repoName: box
             branchName: main
             diy: zyangDC.sh
             dcdiy: DCDIY.sh
             java_ver: 11
-          - userName: mlabalabala
+          - userName: gj8438
             repoName: box
             branchName: main
             diy: YYDC.sh
@@ -122,7 +122,6 @@ jobs:
         working-directory: TVBoxOSC
         run: |
           chmod +x gradlew
-          ./gradlew cleanBuildCache
           ./gradlew assemblerelease --build-cache --parallel --daemon --warning-mode all
 
       - name: 准备应用程序
