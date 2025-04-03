@@ -25,6 +25,7 @@ jobs:
             repoName: QBox
             branchName: main
             diy: q215613905.sh
+            java_ver: 11
           - userName: wwz09
             repoName: TBox
             branchName: main
