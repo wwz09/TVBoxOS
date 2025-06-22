@@ -70,26 +70,6 @@ public class App extends MultiDexApplication {
         // davTest();
     }
 
-public class App extends Application {
-
-    private static Context mContext;
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        mContext = this;
-        // 初始化 Hawk
-        Hawk.init(this).build();
-
-        // 调用订阅方法自动刷新订阅源
-        StoreApiConfig.get().Subscribe(this);
-    }
-
-    public static Context getContext() {
-        return mContext;
-    }
-}
-
     // private void davTest () {
     //     String davUrl = "https://www.bunnyabc.eu.org:15245/dav/";
     //     String uname = "tvbox_dav";
