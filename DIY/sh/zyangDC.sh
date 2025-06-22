@@ -10,7 +10,6 @@ cp -rf $GITHUB_WORKSPACE/DIY/png/等待图标.png app/src/main/res/drawable/icon
 cp -rf $GITHUB_WORKSPACE/DIY/png/等待图标.png app/src/main/res/drawable-xhdpi/icon_loading.png
 cp -rf $GITHUB_WORKSPACE/DIY/dc/epg_data.json app/src/main/assets/epg_data.json
 cp -rf $GITHUB_WORKSPACE/DIY/dc/URL.java app/src/main/java/com/github/tvbox/osc/bbox/constant/URL.java
-cp -rf $GITHUB_WORKSPACE/DIY/dc/build.gradle build.gradle
 cp -rf $GITHUB_WORKSPACE/DIY/dc/ApiDialog.java app/src/main/java/com/github/tvbox/osc/bbox/ui/dialog/ApiDialog.java
 cp -rf $GITHUB_WORKSPACE/DIY/dc/PlayFragment.java app/src/main/java/com/github/tvbox/osc/bbox/ui/fragment/PlayFragment.java
 cp -rf $GITHUB_WORKSPACE/DIY/dc/PlayActivity.java app/src/main/java/com/github/tvbox/osc/bbox/ui/activity/PlayActivity.java
@@ -18,7 +17,6 @@ cp -rf $GITHUB_WORKSPACE/DIY/dc/ModelSettingFragment.java app/src/main/java/com/
 cp -rf $GITHUB_WORKSPACE/DIY/dc/Checker.java app/src/main/java/com/github/tvbox/osc/bbox/util/Checker.java
 cp -rf $GITHUB_WORKSPACE/DIY/dc/App.java app/src/main/java/com/github/tvbox/osc/bbox/base/App.java
 sed -i 's%XXPermissions:13.6%XXPermissions:13.5%g' app/build.gradle
-sed -i 's%gradle-6.7.1-bin.zip%gradle-7.6-bin.zip%g' gradle/wrapper/gradle-wrapper.properties
 sed -i 's%tv.org.eu.bunnyabc%tv.org.eu.bunnyabc.mla%g' app/build.gradle
 sed -i 's%Jade%聚影视%g' app/src/main/res/values/strings.xml
 

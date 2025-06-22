@@ -1,12 +1,8 @@
 package com.github.tvbox.osc.bbox.base;
 
-import android.app.Application;
-import android.content.Context;
 import android.app.Activity;
 import android.widget.Toast;
 import androidx.multidex.MultiDexApplication;
-import com.github.tvbox.osc.bbox.api.StoreApiConfig;
-import com.orhanobut.hawk.Hawk;
 import com.github.tvbox.osc.bbox.bean.VodInfo;
 import com.github.tvbox.osc.bbox.callback.EmptyCallback;
 import com.github.tvbox.osc.bbox.callback.LoadingCallback;
