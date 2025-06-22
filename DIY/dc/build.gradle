@@ -30,7 +30,7 @@ buildscript {
 }
 
 // 在 gradle-wrapper.properties 文件中更新 Gradle 版本
-distributionUrl=https\://services.gradle.org/distributions/gradle-7.6-bin.zip
+// distributionUrl=https\://services.gradle.org/distributions/gradle-7.6-bin.zip
 
 
 allprojects {
