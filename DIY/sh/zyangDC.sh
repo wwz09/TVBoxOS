@@ -15,7 +15,7 @@ cp -rf $GITHUB_WORKSPACE/DIY/dc/URL1.java app/src/main/java/com/github/tvbox/osc
 # cp -rf $GITHUB_WORKSPACE/DIY/dc/PlayActivity.java app/src/main/java/com/github/tvbox/osc/bbox/ui/activity/PlayActivity.java
 # cp -rf $GITHUB_WORKSPACE/DIY/dc/ModelSettingFragment.java app/src/main/java/com/github/tvbox/osc/bbox/ui/fragment/ModelSettingFragment.java
 # cp -rf $GITHUB_WORKSPACE/DIY/dc/Checker.java app/src/main/java/com/github/tvbox/osc/bbox/util/Checker.java
-# cp -rf $GITHUB_WORKSPACE/DIY/dc/App.java app/src/main/java/com/github/tvbox/osc/bbox/base/App.java
+cp -rf $GITHUB_WORKSPACE/DIY/dc/AppA.java app/src/main/java/com/github/tvbox/osc/bbox/base/App.java
 sed -i 's%XXPermissions:13.6%XXPermissions:13.5%g' app/build.gradle
 sed -i 's%tv.org.eu.bunnyabc%tv.org.eu.bunnyabc.mla%g' app/build.gradle
 sed -i 's%Jade%VIP影视%g' app/src/main/res/values/strings.xml
