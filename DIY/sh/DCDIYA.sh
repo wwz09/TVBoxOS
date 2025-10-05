@@ -13,6 +13,8 @@ sed -i 's%// String defaultApiName%String defaultApiName%g' app/src/main/java/co
 sed -i 's%// String defaultApi%String defaultApi%g' app/src/main/java/com/github/tvbox/osc/bbox/base/App.java
 sed -i 's%// defaultApiMap.put%defaultApiMap.put%g' app/src/main/java/com/github/tvbox/osc/bbox/base/App.java
 sed -i 's%// defaultApiHistory.add%defaultApiHistory.add%g' app/src/main/java/com/github/tvbox/osc/bbox/base/App.java
+sed -i 's%// List<String>%List<String>%g' app/src/main/java/com/github/tvbox/osc/bbox/base/App.java
+sed -i 's%// Map<String, String>%Map<String, String>%g' app/src/main/java/com/github/tvbox/osc/bbox/base/App.java
 sed -i 's%// putDefault(HawkConfig.API%putDefault(HawkConfig.API%g' app/src/main/java/com/github/tvbox/osc/bbox/base/App.java
 sed -i 's%硬解码%软解码%g' app/src/main/java/com/github/tvbox/osc/bbox/base/App.java
 
