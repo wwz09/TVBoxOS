@@ -15,8 +15,7 @@ sed -i 's%// Map<String, String> defaultApiMap = Hawk.get(HawkConfig.API_MAP, ne
 sed -i 's%// defaultApiMap.put(defaultApiName%defaultApiMap.put(defaultApiName%g' app/src/main/java/com/github/tvbox/osc/bbox/base/App.java
 sed -i 's%// List<String> defaultApiHistory = Hawk.get%List<String> defaultApiHistory = Hawk.get%g' app/src/main/java/com/github/tvbox/osc/bbox/base/App.java
 sed -i 's%// defaultApiHistory.add(defaultApiName);%defaultApiHistory.add(defaultApiName);%g' app/src/main/java/com/github/tvbox/osc/bbox/base/App.java
-sed -i 's%// putDefault(HawkConfig.API_URL%putDefault(HawkConfig.API_URL%g' app/src/main/java/com/github/tvbox/osc/bbox/base/App.java
-sed -i 's%// putDefault(HawkConfig.API_MAP%putDefault(HawkConfig.API_MAP%g' app/src/main/java/com/github/tvbox/osc/bbox/base/App.java
+sed -i 's%// putDefault(HawkConfig%putDefault(HawkConfig%g' app/src/main/java/com/github/tvbox/osc/bbox/base/App.java
 sed -i 's%硬解码%软解码%g' app/src/main/java/com/github/tvbox/osc/bbox/base/App.java
 
 echo 'DIY end'
