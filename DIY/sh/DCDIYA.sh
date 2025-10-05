@@ -12,6 +12,7 @@ sed -i 's%(HawkConfig.LIVE_URL, ""))%(HawkConfig.LIVE_URL, "https://git.wwz09.xi
 sed -i 's%URL.DEFAULT_STORE_API_URL%"https://git.wwz09.xin:5555/wwz09/ubuntu/raw/branch/main/TXT/dc.json"%g' app/src/main/java/com/github/tvbox/osc/bbox/base/App.java
 sed -i 's%// String defaultApiName = "自备份线路";%String defaultApiName = "自备份线路";%g' app/src/main/java/com/github/tvbox/osc/bbox/base/App.java
 sed -i 's%// String defaultApi = url + URL.DEFAULT_API_URL;%String defaultApi = "https://git.wwz09.xin:5555/wwz09/ubuntu/raw/main/main.json";%g' app/src/main/java/com/github/tvbox/osc/bbox/base/App.java
+sed -i 's%// putDefault(HawkConfig.API%putDefault(HawkConfig.API%g' app/src/main/java/com/github/tvbox/osc/bbox/base/App.java
 sed -i 's%硬解码%软解码%g' app/src/main/java/com/github/tvbox/osc/bbox/base/App.java
 
 echo 'DIY end'
