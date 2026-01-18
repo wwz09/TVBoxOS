@@ -122,7 +122,7 @@ jobs:
         working-directory: TVBoxOSC
         run: |
           chmod +x gradlew
-          ./gradlew assemblerelease --build-cache --parallel --daemon --warning-mode all
+          ./gradlew assembleRelease --build-cache --parallel --daemon --warning-mode all
 
       - name: 准备应用程序
         if: ${{ env.commit }}
@@ -130,7 +130,7 @@ jobs:
         run: |
           rm -rf apk/
           mkdir -p apk/
-          for file in `find ~ -name "*release*.apk" -print`; do
+          for file in `find ./app/build/outputs/apk -name "*release*.apk" -print`; do
             # 获取文件的基本名称
             base=$(basename "$file")
             # 如果文件是 TVBox_ 开头
@@ -158,12 +158,12 @@ jobs:
           echo "commit=" >> $GITHUB_ENV
 
       - name: 发布并上传
-        uses: ncipollo/release-action@main
+        uses: ncipollo/release-action@v1
         if: ${{ env.commit }}
         continue-on-error: true
         with:
-          name: ${{ matrix.userName }}_${{ matrix.repoName }}
-          tag: ${{ matrix.userName }}_${{ matrix.repoName }}
+          name: ${{ matrix.userName }}_${{ matrix.repoName }}_${{ env.tag }}
+          tag: ${{ matrix.userName }}_${{ matrix.repoName }}_${{ env.tag }}_${{ env.commitS }}
           allowUpdates: true
           removeArtifacts: true
           artifacts: |
@@ -174,7 +174,7 @@ jobs:
         with:
           keep_latest: 10
           delete_tags: true
-          delete_tag_pattern: ${{ matrix.userName }}_${{ matrix.repoName }}_${{ matrix.branchName }}.*
+          delete_tag_pattern: ${{ matrix.userName }}_${{ matrix.repoName }}_.*
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
