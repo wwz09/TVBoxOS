@@ -114,15 +114,13 @@ jobs:
         with:
           distribution: temurin
           java-version: ${{ matrix.java_ver }}
-      - uses: gradle/actions/setup-gradle@v5
-        if: ${{ env.commit }}
- 
       - name: 进行构建
         if: ${{ env.commit }}
         working-directory: TVBoxOSC
         run: |
           chmod +x gradlew
-          ./gradlew assembleRelease --build-cache --parallel --daemon --warning-mode all
+          # 不使用 --build-cache 避免缓存清理失败
+          ./gradlew assembleRelease --parallel --daemon --warning-mode all
 
       - name: 准备应用程序
         if: ${{ env.commit }}
@@ -130,7 +128,11 @@ jobs:
         run: |
           rm -rf apk/
           mkdir -p apk/
-          for file in `find ./app/build/outputs/apk -name "*release*.apk" -print`; do
+          # 搜索所有可能的APK位置
+          echo "正在搜索APK文件..."
+          find . -name "*release*.apk" -type f -print
+          # 搜索主目录的同时也搜索当前目录
+          for file in `find . -name "*release*.apk" -type f -print`; do
             # 获取文件的基本名称
             base=$(basename "$file")
             # 如果文件是 TVBox_ 开头
@@ -140,8 +142,11 @@ jobs:
               new_base="${{ matrix.userName }}_${{ matrix.repoName }}_${{ env.tag }}.apk"
             fi
             # 移动并重命名文件
+            echo "移动文件: $file -> apk/$new_base"
             mv "$file" "apk/$new_base"
           done
+          # 列出apk目录内容
+          ls -la apk/
           mv sourceCode-${{ env.commitS }}.* apk/
       #- name: 程序上传
         #uses: actions/upload-artifact@v4
