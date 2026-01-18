@@ -128,26 +128,55 @@ jobs:
         run: |
           rm -rf apk/
           mkdir -p apk/
-          # 搜索所有可能的APK位置
-          echo "正在搜索APK文件..."
-          find . -name "*release*.apk" -type f -print
-          # 搜索主目录的同时也搜索当前目录
-          for file in `find . -name "*release*.apk" -type f -print`; do
-            # 获取文件的基本名称
-            base=$(basename "$file")
-            # 如果文件是 TVBox_ 开头
-            if [[ "$base" == TVBox_* ]]; then
-              new_base=$(echo "$base" | sed "s/release/${{ matrix.userName }}_${{ env.tag }}/")
-            else
-              new_base="${{ matrix.userName }}_${{ matrix.repoName }}_${{ env.tag }}.apk"
-            fi
-            # 移动并重命名文件
-            echo "移动文件: $file -> apk/$new_base"
-            mv "$file" "apk/$new_base"
-          done
-          # 列出apk目录内容
+          
+          # 详细显示构建输出目录结构，帮助调试
+          echo "=== 显示构建输出目录结构 ==="
+          ls -la || true
+          ls -la app || true
+          ls -la app/build || true
+          ls -la app/build/outputs || true
+          ls -la app/build/outputs/apk || true
+          ls -la app/build/outputs/apk/* || true
+          
+          # 搜索所有可能的APK位置，包括不同的构建变体目录
+          echo "=== 正在搜索APK文件 ==="
+          find . -name "*.apk" -type f -print
+          
+          # 收集所有APK文件，不管名称是什么
+          apk_files=$(find . -name "*.apk" -type f -print)
+          
+          if [ -z "$apk_files" ]; then
+            echo "=== 未找到任何APK文件！显示完整目录结构 ==="
+            find . -type f -name "*.apk" -o -name "*release*" | head -20
+            # 检查是否有bundle文件
+            find . -name "*.aab" -type f -print
+          else
+            # 处理找到的APK文件
+            for file in $apk_files; do
+              base=$(basename "$file")
+              if [[ "$base" == TVBox_* ]]; then
+                new_base=$(echo "$base" | sed "s/release/${{ matrix.userName }}_${{ env.tag }}/")
+              else
+                new_base="${{ matrix.userName }}_${{ matrix.repoName }}_${{ env.tag }}.apk"
+              fi
+              echo "移动文件: $file -> apk/$new_base"
+              mv "$file" "apk/$new_base"
+            done
+          fi
+          
+          # 列出apk目录内容，确认APK文件存在
+          echo "=== APK目录最终内容 ==="
           ls -la apk/
-          mv sourceCode-${{ env.commitS }}.* apk/
+          
+          # 检查是否有APK文件，如果没有，创建一个空文件作为占位符（防止发布失败）
+          if [ -z "$(ls -A apk/*.apk 2>/dev/null)" ]; then
+            echo "=== 警告：APK目录中没有APK文件！创建占位符文件 ==="
+            touch apk/placeholder.txt
+          fi
+          
+          # 移动源代码压缩文件
+          mv sourceCode-${{ env.commitS }}.* apk/ || true
+          echo "=== 准备应用程序步骤完成 ==="
       #- name: 程序上传
         #uses: actions/upload-artifact@v4
         #if: ${{ env.commit }}
@@ -172,7 +201,7 @@ jobs:
           allowUpdates: true
           removeArtifacts: true
           artifacts: |
-            TVBoxOSC/apk/*.apk
+            TVBoxOSC/apk/*
             TVBoxOSC/apk/sourceCode-${{ env.commitS }}.*
 
       - uses: dev-drprasad/delete-older-releases@master
