@@ -88,12 +88,13 @@ jobs:
             sed -i "/jitpack.io/a\        maven { url 'https://o0halfLife0o.github.io/crosswalk/releases/crosswalk/android/maven2' }" build.gradle
           fi
           
-      - name: 压缩源代码
-        if: ${{ env.commit }}
-        working-directory: TVBoxOSC
-        run: |
-          #zip -q -x ".git/*" -x  ".github/*" -r sourceCode-${{ env.commitS }}.zip .
-          tar -cJf sourceCode-${{ env.commitS }}.tar.xz --exclude=.git --exclude=.github *
+      # 移除源代码压缩步骤，不再上传tar.xz文件
+      #- name: 压缩源代码
+      #  if: ${{ env.commit }}
+      #  working-directory: TVBoxOSC
+      #  run: |
+      #    #zip -q -x ".git/*" -x  ".github/*" -r sourceCode-${{ env.commitS }}.zip .
+      #    tar -cJf sourceCode-${{ env.commitS }}.tar.xz --exclude=.git --exclude=.github *
 
       - name: 安卓安装包签名
         if: ${{ env.commit }}
@@ -174,8 +175,8 @@ jobs:
             touch apk/placeholder.txt
           fi
           
-          # 移动源代码压缩文件
-          mv sourceCode-${{ env.commitS }}.* apk/ || true
+          # 不再上传源代码压缩文件，跳过移动步骤
+          echo "跳过源代码压缩文件移动步骤"
           echo "=== 准备应用程序步骤完成 ==="
       #- name: 程序上传
         #uses: actions/upload-artifact@v4
@@ -201,8 +202,7 @@ jobs:
           allowUpdates: true
           removeArtifacts: true
           artifacts: |
-            TVBoxOSC/apk/*
-            TVBoxOSC/apk/sourceCode-${{ env.commitS }}.*
+            TVBoxOSC/apk/*.apk
 
       - uses: dev-drprasad/delete-older-releases@master
         with:
